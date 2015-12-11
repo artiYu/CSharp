@@ -8,9 +8,7 @@ namespace CalcMaxi
     public partial class Form1 : Form
     {
         #region Fields
-        Stack<double> stackOperands = new Stack<double>();
-        string currentOperation;
-        Calculation calc = new Calculation();
+        ParseSimpleMode psm = new ParseSimpleMode();
         #endregion
 
         #region Constructors
@@ -69,45 +67,15 @@ namespace CalcMaxi
             }
         }
 
-        private void Clicking(string text)
+        private void Clicking(string buttonText)
         {
-            if (text.Length == 1)
-            {
-                if (Char.IsDigit(text[0]))
-                {
-                    textBoxResult.Text += text;
-                }
+            if (buttonText.Length == 1 && Char.IsDigit(buttonText[0]))
+                textBoxResult.Text += buttonText;
 
-                else if (text != "=")
-                {
-                    double operand = double.Parse(textBoxResult.Text);
-                    stackOperands.Push(operand);
-                    currentOperation = text;
-
-                    textBoxResult.Text = "";
-
-                    if (text == "±")
-                        textBoxResult.Text = PerformCalc().ToString();
-                    else if (text == "√")
-                        textBoxResult.Text = PerformCalc().ToString();
-                    
-                }
-
-                else if (text == "=")
-                {
-                    double operand = double.Parse(textBoxResult.Text);
-                    stackOperands.Push(operand);
-                    textBoxResult.Text = PerformCalc().ToString();
-                }
-            }
+            else
+                textBoxResult.Text = psm.PerformParse(buttonText, textBoxResult.Text);
+            
         }
-
-        private double PerformCalc()
-        {
-            calc.SetOperands(currentOperation, stackOperands);
-            return calc.performOperation();
-        }
-
         #endregion
     }
 }

@@ -88,9 +88,7 @@ namespace CalcMaxi
                 resultoperation = unaryOperations[UnOperation](Operand1);
 
             else if (typeop == TypeOperation.BINARY)
-            {
                 resultoperation = binaryOperations[BinOperation](Operand1, Operand2);
-            }
             return resultoperation;
         }
         #endregion
