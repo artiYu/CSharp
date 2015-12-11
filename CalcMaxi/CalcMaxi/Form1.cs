@@ -7,20 +7,56 @@ namespace CalcMaxi
 {
     public partial class Form1 : Form
     {
-        Stack<BigInteger> stackOperands = new Stack<BigInteger>();
+        #region Fields
+        Stack<double> stackOperands = new Stack<double>();
         string currentOperation;
-        Calculation calc;
+        Calculation calc = new Calculation();
+        #endregion
 
+        #region Constructors
         public Form1()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region Events handlers
         private void Form1_Load(object sender, EventArgs e)
         {
             SetEventsToNumbers();
         }
 
+        private void Button_Click(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            Clicking(button.Text);
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            foreach (Control control in Controls)
+            {
+                Button button = control as Button;
+
+                //check if digit
+                if (e.KeyChar == button.Text[0])
+                {
+                    Button_Click(button, e);
+                    return;
+                }
+
+                //check if Enter
+                else if (e.KeyChar == (char)Keys.Enter)
+                {
+                    //Button_Click
+                }
+                else
+                    return;
+            }
+        }
+        #endregion
+
+        #region Methods
         private void SetEventsToNumbers()
         {
             foreach (Control control in Controls)
@@ -29,26 +65,6 @@ namespace CalcMaxi
                 {
                     Button button = control as Button;
                     button.Click += new EventHandler(Button_Click);
-                }
-            }
-        }
-
-        private void Button_Click(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-            var buttonText = button.Text;
-            Clicking(buttonText);
-        }
-
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            foreach (Control control in Controls)
-            {
-                Button button = control as Button;
-                if (e.KeyChar == button.Text[0])
-                {
-                    Button_Click(button, e);
-                    return;
                 }
             }
         }
@@ -64,23 +80,34 @@ namespace CalcMaxi
 
                 else if (text != "=")
                 {
-                    if (text == "√")
-                        MessageBox.Show("No implementation yet ))");
-                    int operand = int.Parse(textBoxResult.Text);
+                    double operand = double.Parse(textBoxResult.Text);
                     stackOperands.Push(operand);
                     currentOperation = text;
+
                     textBoxResult.Text = "";
+
+                    if (text == "±")
+                        textBoxResult.Text = PerformCalc().ToString();
+                    else if (text == "√")
+                        textBoxResult.Text = PerformCalc().ToString();
+                    
                 }
 
                 else if (text == "=")
                 {
-                    int operand = int.Parse(textBoxResult.Text);
+                    double operand = double.Parse(textBoxResult.Text);
                     stackOperands.Push(operand);
-                    calc = new Calculation(currentOperation, stackOperands);
-                    textBoxResult.Text = "";
-                    textBoxResult.Text = calc.performOperation().ToString();
+                    textBoxResult.Text = PerformCalc().ToString();
                 }
             }
         }
+
+        private double PerformCalc()
+        {
+            calc.SetOperands(currentOperation, stackOperands);
+            return calc.performOperation();
+        }
+
+        #endregion
     }
 }
