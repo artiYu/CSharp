@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Windows.Forms;
 
 namespace CalcMaxi
 {
-    class Calculation
+    class Calculation : Form
     {
         #region Fields
         string _binOperation;
@@ -31,7 +32,7 @@ namespace CalcMaxi
         Dictionary<string, Func<BigInteger, BigInteger>> unaryOperations =
             new Dictionary<string, Func<BigInteger, BigInteger>>
             {
-
+                { "±", a => -a }
             };
         #endregion
 
@@ -101,7 +102,7 @@ namespace CalcMaxi
             BigInteger resultoperation = 0;
 
             if (typeop == TypeOperation.UNARY)
-                resultoperation = 0;
+                resultoperation = unaryOperations[UnOperation](Operand1);
             else if (typeop == TypeOperation.BINARY)
                 resultoperation = binaryOperations[BinOperation](Operand1, Operand2);
             return resultoperation;
