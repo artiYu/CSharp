@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace CalcMaxi
@@ -18,7 +14,7 @@ namespace CalcMaxi
         #region Methods
         public string PerformParse(string bText, string tbText)
         {
-            string result = "";
+            string result = tbText;
 
             //% = +-*/ √ ± . ←
             if (bText.Length == 1)

@@ -9,6 +9,7 @@ namespace CalcMaxi
     {
         #region Fields
         ParseSimpleMode psm = new ParseSimpleMode();
+        bool isFirstOperation = false;
         #endregion
 
         #region Constructors
@@ -69,11 +70,20 @@ namespace CalcMaxi
 
         private void Clicking(string buttonText)
         {
+            if (!isFirstOperation)
+                textBoxResult.Text = "";
+
             if (buttonText.Length == 1 && Char.IsDigit(buttonText[0]))
+            {
+                isFirstOperation = true;
                 textBoxResult.Text += buttonText;
+            }
 
             else
+            {
+                isFirstOperation = false;
                 textBoxResult.Text = psm.PerformParse(buttonText, textBoxResult.Text);
+            }
             
         }
         #endregion
