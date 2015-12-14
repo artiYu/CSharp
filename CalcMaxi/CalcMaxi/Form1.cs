@@ -70,12 +70,8 @@ namespace CalcMaxi
 
         private void Clicking(string buttonText)
         {
-            //if (!isFirstOperation)
-            //    textBoxResult.Text = "";
-
             if (buttonText.Length == 1 && Char.IsDigit(buttonText[0]))
             {
-                //isFirstOperation = true;
                 if (isFirstOperation)
                 {
                     textBoxResult.Text = "";
@@ -86,9 +82,7 @@ namespace CalcMaxi
 
             else
             {
-                //isFirstOperation = false;
                 isFirstOperation = true;
-                //MessageBox.Show(buttonText + "  " + textBoxResult.Text);
                 textBoxResult.Text = psm.PerformParse(buttonText, textBoxResult.Text);
             }
             
