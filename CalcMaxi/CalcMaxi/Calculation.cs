@@ -12,9 +12,11 @@ namespace CalcMaxi
         string _unOperation;
         double _operand1;
         double _operand2;
+        bool _isFirstEqual;
         TypeOperation typeop;
 
-        enum TypeOperation {
+        enum TypeOperation
+        {
             UNARY,
             BINARY
         }
@@ -63,21 +65,55 @@ namespace CalcMaxi
         #endregion
 
         #region Methods
-        public void SetOperands(string operation, Stack<double> operands)
+        public void SetOperands(string operation, Stack<double> operands,
+                                bool isBinaryOp, bool isFirstEqual)
         {
-            if (operands.Count == 2)
+            if (isBinaryOp)
             {
                 typeop = TypeOperation.BINARY;
-                BinOperation = operation;
-                Operand2 = operands.Pop();
-                Operand1 = operands.Pop();
+
+                if (!isFirstEqual)
+                {
+                    UnOperation = operation;
+                    Operand1 = operands.Pop();
+                }
+                else
+                {
+                    BinOperation = operation;
+                    Operand2 = operands.Pop();
+                    Operand1 = operands.Pop();
+                }
             }
-            else if (operands.Count == 1)
+
+            else
             {
                 typeop = TypeOperation.UNARY;
                 UnOperation = operation;
                 Operand1 = operands.Pop();
             }
+            //if (operands.Count == 2)
+            //{
+            //    typeop = TypeOperation.BINARY;
+            //    BinOperation = operation;
+            //    Operand2 = operands.Pop();
+            //    Operand1 = operands.Pop();
+            //}
+
+            //else if (operands.Count == 1)
+            //{
+            //    if (isFirstEqual)
+            //    {
+            //        typeop = TypeOperation.UNARY;
+            //        UnOperation = operation;
+            //        Operand1 = operands.Pop();
+            //    }
+            //    else
+            //    {
+            //        typeop = TypeOperation.BINARY;
+            //        UnOperation = operation;
+            //        Operand1 = operands.Pop();
+            //    }
+            //}
         }
 
         public double performOperation()

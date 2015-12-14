@@ -9,6 +9,8 @@ namespace CalcMaxi
         Stack<double> stackOperands = new Stack<double>();
         string currentOperation;
         Calculation calc = new Calculation();
+        bool isFirstEqual = true;
+        bool isBinaryOp = true;
         #endregion
 
         #region Methods
@@ -19,26 +21,27 @@ namespace CalcMaxi
             //% = +-*/ √ ± . ←
             if (bText.Length == 1)
             {
+                PushingOperands(tbText);
+
                 if (bText == "=")
                 {
-                    double operand = double.Parse(tbText);
-                    stackOperands.Push(operand);
                     result = PerformCalc().ToString();
+                    isFirstEqual = false;
                 }
                 
                 else if (bText.IndexOfAny("+-/*".ToCharArray()) >= 0)
                 {
-                    double operand = double.Parse(tbText);
-                    stackOperands.Push(operand);
                     currentOperation = bText;
+                    isBinaryOp = true;
+                    isFirstEqual = true;
                 }
 
                 else if (bText.IndexOfAny("√±".ToCharArray()) >= 0)
                 {
-                    double operand = double.Parse(tbText);
-                    stackOperands.Push(operand);
                     currentOperation = bText;
+                    isBinaryOp = false;
                     result = PerformCalc().ToString();
+                    isFirstEqual = true;
                 }
             }
 
@@ -50,9 +53,15 @@ namespace CalcMaxi
             return result;
         }
 
+        private void PushingOperands(string tbText)
+        {
+            double operand = double.Parse(tbText);
+            stackOperands.Push(operand);
+        }
+
         private double PerformCalc()
         {
-            calc.SetOperands(currentOperation, stackOperands);
+            calc.SetOperands(currentOperation, stackOperands, isBinaryOp, isFirstEqual);
             return calc.performOperation();
         }
         #endregion
