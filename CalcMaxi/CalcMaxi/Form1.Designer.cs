@@ -77,6 +77,7 @@
             this.textBoxResult.ReadOnly = true;
             this.textBoxResult.Size = new System.Drawing.Size(225, 29);
             this.textBoxResult.TabIndex = 1;
+            this.textBoxResult.Text = "0";
             this.textBoxResult.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // buttonMC
@@ -310,7 +311,7 @@
             this.buttonDot.Name = "buttonDot";
             this.buttonDot.Size = new System.Drawing.Size(42, 35);
             this.buttonDot.TabIndex = 27;
-            this.buttonDot.Text = ".";
+            this.buttonDot.Text = ",";
             this.buttonDot.UseVisualStyleBackColor = true;
             // 
             // button0

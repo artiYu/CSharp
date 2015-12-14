@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Numerics;
 
 namespace CalcMaxi
 {
@@ -10,6 +8,9 @@ namespace CalcMaxi
         #region Fields
         ParseSimpleMode psm = new ParseSimpleMode();
         bool isFirstOperation = false;
+
+        //for removing initial 0
+        bool isStart = true;
         #endregion
 
         #region Constructors
@@ -38,19 +39,11 @@ namespace CalcMaxi
                 Button button = control as Button;
 
                 //check if digit
-                if (e.KeyChar == button.Text[0])
+                if (e.KeyChar == button.Text[0] || e.KeyChar == (char)Keys.Enter)
                 {
                     Button_Click(button, e);
                     return;
                 }
-
-                //check if Enter
-                else if (e.KeyChar == (char)Keys.Enter)
-                {
-                    //Button_Click
-                }
-                else
-                    return;
             }
         }
         #endregion
@@ -76,6 +69,11 @@ namespace CalcMaxi
                 {
                     textBoxResult.Text = "";
                     isFirstOperation = false;
+                }
+                if (isStart)
+                {
+                    textBoxResult.Text = "";
+                    isStart = false;
                 }
                 textBoxResult.Text += buttonText;
             }

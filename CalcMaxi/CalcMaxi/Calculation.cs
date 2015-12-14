@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Windows.Forms;
 
 namespace CalcMaxi
@@ -12,7 +11,6 @@ namespace CalcMaxi
         string _unOperation;
         double _operand1;
         double _operand2;
-        bool _isFirstEqual;
         TypeOperation typeop;
 
         enum TypeOperation
@@ -34,7 +32,8 @@ namespace CalcMaxi
             new Dictionary<string, Func<double, double>>
             {
                 { "±", a => -a },
-                { "√", a => Math.Sqrt(a) }
+                { "√", a => Math.Sqrt(a) },
+                { "1/x", a => 1.0/a }
             };
         #endregion
 
