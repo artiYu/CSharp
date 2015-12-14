@@ -35,6 +35,9 @@ namespace CalcMaxi
 
                 else if (bText.IndexOfAny("√±".ToCharArray()) >= 0)
                 {
+                    double operand = double.Parse(tbText);
+                    stackOperands.Push(operand);
+                    currentOperation = bText;
                     result = PerformCalc().ToString();
                 }
             }
