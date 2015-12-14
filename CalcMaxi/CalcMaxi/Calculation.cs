@@ -91,29 +91,6 @@ namespace CalcMaxi
                 UnOperation = operation;
                 Operand1 = operands.Pop();
             }
-            //if (operands.Count == 2)
-            //{
-            //    typeop = TypeOperation.BINARY;
-            //    BinOperation = operation;
-            //    Operand2 = operands.Pop();
-            //    Operand1 = operands.Pop();
-            //}
-
-            //else if (operands.Count == 1)
-            //{
-            //    if (isFirstEqual)
-            //    {
-            //        typeop = TypeOperation.UNARY;
-            //        UnOperation = operation;
-            //        Operand1 = operands.Pop();
-            //    }
-            //    else
-            //    {
-            //        typeop = TypeOperation.BINARY;
-            //        UnOperation = operation;
-            //        Operand1 = operands.Pop();
-            //    }
-            //}
         }
 
         public double performOperation()
