@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace CalcMaxi
 {
-    class ParseSimpleMode : Form
+    class ParserSimpleMode : Form
     {
         #region Fields
         Stack<double> stackOperands = new Stack<double>();
@@ -11,6 +11,8 @@ namespace CalcMaxi
         Calculation calc = new Calculation();
         bool isFirstEqual = true;
         bool isBinaryOp = true;
+        double memory = 0.0d;
+        bool isUsingMemory = false;
         #endregion
 
         #region Methods
@@ -79,7 +81,6 @@ namespace CalcMaxi
                     while (stackOperands.Count > 0)
                         stackOperands.Pop();
                 }
-
             }
 
             else
@@ -100,31 +101,43 @@ namespace CalcMaxi
 
                 else if (bText == "MR")
                 {
-                    MessageBox.Show("Not implementation yet");
+                    result = memory.ToString();
+                    isUsingMemory = true;
                 }
 
                 else if (bText == "MC")
                 {
-                    MessageBox.Show("Not implementation yet");
+                    memory = 0.0d;
+                    isUsingMemory = false;
                 }
 
                 else if (bText == "MS")
                 {
-                    MessageBox.Show("Not implementation yet");
+                    memory = stackOperands.Peek();
+                    isUsingMemory = true;
                 }
 
                 else if (bText == "M+")
                 {
-                    MessageBox.Show("Not implementation yet");
+                    memory += stackOperands.Peek();
+                    result = memory.ToString();
+                    isUsingMemory = true;
                 }
 
                 else if (bText == "M-")
                 {
-                    MessageBox.Show("Not implementation yet");
+                    memory -= stackOperands.Peek();
+                    result = memory.ToString();
+                    isUsingMemory = true;
                 }
             }
 
             return result;
+        }
+
+        public bool IsUsingMemory()
+        {
+            return isUsingMemory;
         }
 
         private void PushingOperands(string tbText)

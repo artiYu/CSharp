@@ -7,7 +7,7 @@ namespace CalcMaxi
     public partial class Form1 : Form
     {
         #region Fields
-        ParseSimpleMode psm = new ParseSimpleMode();
+        ParserSimpleMode psm = new ParserSimpleMode();
         bool isFirstOperation = false;
 
         //for removing initial 0
@@ -51,7 +51,7 @@ namespace CalcMaxi
 
             if (keyCode == Keys.Add || keyCode == Keys.Oemplus && e.Shift)
                 Clicking("+");
-            else if (keyCode == Keys.Subtract || keyCode == Keys.OemMinus && e.Shift)
+            else if (keyCode == Keys.Subtract || keyCode == Keys.OemMinus)
                 Clicking("-");
             else if (keyCode == Keys.Multiply || e.KeyCode == Keys.D8 && e.Shift)
                 Clicking("*");
@@ -104,7 +104,12 @@ namespace CalcMaxi
             else
             {
                 isFirstOperation = true;
+                
                 textBoxResult.Text = psm.PerformParse(buttonText, textBoxResult.Text);
+                if (psm.IsUsingMemory())
+                    labelMemory.Text = "M";
+                else
+                    labelMemory.Text = "";
             }
 
         }

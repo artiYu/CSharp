@@ -59,6 +59,7 @@
             this.button0 = new System.Windows.Forms.Button();
             this.buttonResult = new System.Windows.Forms.Button();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
+            this.labelMemory = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -340,11 +341,20 @@
             this.menuStrip2.TabIndex = 30;
             this.menuStrip2.Text = "menuStrip2";
             // 
+            // labelMemory
+            // 
+            this.labelMemory.AutoSize = true;
+            this.labelMemory.Location = new System.Drawing.Point(19, 35);
+            this.labelMemory.Name = "labelMemory";
+            this.labelMemory.Size = new System.Drawing.Size(0, 13);
+            this.labelMemory.TabIndex = 31;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(250, 369);
+            this.Controls.Add(this.labelMemory);
             this.Controls.Add(this.buttonResult);
             this.Controls.Add(this.button0);
             this.Controls.Add(this.buttonDot);
@@ -422,6 +432,7 @@
         private System.Windows.Forms.Button buttonResult;
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.Label labelMemory;
     }
 }
 
