@@ -11,15 +11,6 @@ namespace CalcMaxi
         Calculation calc = new Calculation();
         bool isFirstEqual = true;
         bool isBinaryOp = true;
-        TypeButton typeB;
-
-        enum TypeButton
-        {
-            BinaryOperation,
-            UnaryOperation,
-            Equal,
-            NotOperation
-        }
         #endregion
 
         #region Methods
@@ -40,7 +31,6 @@ namespace CalcMaxi
                         result = PerformCalc().ToString();
                         isFirstEqual = false;
                     }
-                    typeB = TypeButton.Equal;
                 }
 
                 else if (bText.IndexOfAny("+-/*".ToCharArray()) >= 0)
@@ -48,7 +38,6 @@ namespace CalcMaxi
                     currentOperation = bText;
                     isBinaryOp = true;
                     isFirstEqual = true;
-                    typeB = TypeButton.BinaryOperation;
                 }
 
                 else if (bText.IndexOfAny("√±".ToCharArray()) >= 0)
@@ -57,33 +46,30 @@ namespace CalcMaxi
                     isBinaryOp = false;
                     result = PerformCalc().ToString();
                     isFirstEqual = true;
-                    typeB = TypeButton.UnaryOperation;
                 }
 
                 else if (bText == "←")
                 {
                     //TODO: if tbText is the result of calculations - don't touch
-                    result = (tbText == "0" || string.IsNullOrEmpty(tbText)) ? 
+                    result = (tbText == "0" || string.IsNullOrEmpty(tbText)) ?
                                         "0" : tbText.Substring(0, tbText.Length - 1);
-                    typeB = TypeButton.NotOperation;
                 }
 
                 //don't work
                 else if (bText == ",")
                 {
-                    typeB = TypeButton.NotOperation;
+                    MessageBox.Show("Not implementation yet");
                 }
 
-                //don't work
                 else if (bText == "%")
                 {
                     double operand2 = stackOperands.Pop();
                     double operand1 = stackOperands.Pop();
-                    MessageBox.Show(operand1 + " " + operand2);
-                    operand2 = operand1 * operand2 / 100;
+
+                    operand2 *= operand1 / 100;
                     stackOperands.Push(operand1);
                     stackOperands.Push(operand2);
-                    result = operand2.ToString();
+                    result = PerformCalc().ToString();
                 }
 
                 else if (bText == "C")
@@ -92,7 +78,6 @@ namespace CalcMaxi
                     currentOperation = null;
                     while (stackOperands.Count > 0)
                         stackOperands.Pop();
-                    typeB = TypeButton.NotOperation;
                 }
 
             }
@@ -105,13 +90,37 @@ namespace CalcMaxi
                     isBinaryOp = false;
                     result = PerformCalc().ToString();
                     isFirstEqual = true;
-                    typeB = TypeButton.UnaryOperation;
                 }
 
                 else if (bText == "CE")
                 {
                     stackOperands.Pop();
                     result = "0";
+                }
+
+                else if (bText == "MR")
+                {
+                    MessageBox.Show("Not implementation yet");
+                }
+
+                else if (bText == "MC")
+                {
+                    MessageBox.Show("Not implementation yet");
+                }
+
+                else if (bText == "MS")
+                {
+                    MessageBox.Show("Not implementation yet");
+                }
+
+                else if (bText == "M+")
+                {
+                    MessageBox.Show("Not implementation yet");
+                }
+
+                else if (bText == "M-")
+                {
+                    MessageBox.Show("Not implementation yet");
                 }
             }
 
@@ -126,12 +135,9 @@ namespace CalcMaxi
 
         private double PerformCalc()
         {
-            if (typeB != TypeButton.NotOperation)
-            {
-                calc.SetOperands(currentOperation, stackOperands, isBinaryOp, isFirstEqual);
-                return calc.performOperation();
-            }
-            return 0;
+            calc.SetOperands(currentOperation, stackOperands, isBinaryOp, isFirstEqual);
+            return calc.performOperation();
+
         }
         #endregion
     }

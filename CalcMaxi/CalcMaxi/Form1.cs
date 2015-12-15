@@ -46,32 +46,28 @@ namespace CalcMaxi
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             Keys keyCode = e.KeyCode;
-            string possibleOperations = ".+-*/%";
             string keyCodeString = keyCode.ToString();
             char lastChar = keyCodeString[keyCodeString.Length - 1];
 
-            if (char.IsDigit(lastChar))
+            if (keyCode == Keys.Add || keyCode == Keys.Oemplus && e.Shift)
+                Clicking("+");
+            else if (keyCode == Keys.Subtract || keyCode == Keys.OemMinus && e.Shift)
+                Clicking("-");
+            else if (keyCode == Keys.Multiply || e.KeyCode == Keys.D8 && e.Shift)
+                Clicking("*");
+            else if (keyCode == Keys.Divide || keyCode == Keys.OemQuestion)
+                Clicking("/");
+            else if (keyCode == Keys.D5 && e.Shift)
+                Clicking("%");
+            else if (keyCode == Keys.OemPeriod || keyCode == Keys.Decimal || keyCode == Keys.Oemcomma)
+                Clicking(",");
+            else if (keyCode == Keys.Oemplus || keyCode == Keys.Enter || keyCode == Keys.Return)
+                Clicking("=");
+            else if (keyCode == Keys.Back)
+                Clicking("←");
+            else if (char.IsDigit(lastChar))
                 Clicking(lastChar.ToString());
 
-            else
-            {
-                if (keyCode == Keys.Add || keyCode == Keys.Oemplus && e.Shift)
-                    Clicking("+");
-                else if (keyCode == Keys.Subtract || keyCode == Keys.OemMinus && e.Shift)
-                    Clicking("-");
-                else if (keyCode == Keys.Multiply || keyCode == Keys.D8 && e.Shift)
-                    Clicking("*");
-                else if (keyCode == Keys.Divide || keyCode == Keys.OemQuestion)
-                    Clicking("/");
-                else if (keyCode == Keys.D5 && e.Shift)
-                    Clicking("%");
-                else if (keyCode == Keys.OemPeriod || keyCode == Keys.Decimal || keyCode == Keys.Oemcomma)
-                    Clicking(",");
-                else if (keyCode == Keys.Oemplus || keyCode == Keys.Enter || keyCode == Keys.Return)
-                    Clicking("=");
-                else if (keyCode == Keys.Back)
-                    Clicking("←");
-            }
         }
         #endregion
 
@@ -110,7 +106,7 @@ namespace CalcMaxi
                 isFirstOperation = true;
                 textBoxResult.Text = psm.PerformParse(buttonText, textBoxResult.Text);
             }
-            
+
         }
         #endregion
     }
