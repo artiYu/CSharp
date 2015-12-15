@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace CalcMaxi
@@ -11,6 +12,16 @@ namespace CalcMaxi
 
         //for removing initial 0
         bool isStart = true;
+
+        Dictionary<string, string> namesOperations = new Dictionary<string, string>()
+        {
+            { "Add", "+" },
+            { "Substract", "-" },
+            { "Multiplication", "*" },
+            { "Division", "/" },
+            { "gfd", "%" },
+            { "gffff", "=" },
+        };
         #endregion
 
         #region Constructors
@@ -32,18 +43,34 @@ namespace CalcMaxi
             Clicking(button.Text);
         }
 
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            foreach (Control control in Controls)
-            {
-                Button button = control as Button;
+            Keys keyCode = e.KeyCode;
+            string possibleOperations = ".+-*/%";
+            string keyCodeString = keyCode.ToString();
+            char lastChar = keyCodeString[keyCodeString.Length - 1];
 
-                //check if digit
-                if (e.KeyChar == button.Text[0] || e.KeyChar == (char)Keys.Enter)
-                {
-                    Button_Click(button, e);
-                    return;
-                }
+            if (char.IsDigit(lastChar))
+                Clicking(lastChar.ToString());
+
+            else
+            {
+                if (keyCode == Keys.Add || keyCode == Keys.Oemplus && e.Shift)
+                    Clicking("+");
+                else if (keyCode == Keys.Subtract || keyCode == Keys.OemMinus && e.Shift)
+                    Clicking("-");
+                else if (keyCode == Keys.Multiply || keyCode == Keys.D8 && e.Shift)
+                    Clicking("*");
+                else if (keyCode == Keys.Divide || keyCode == Keys.OemQuestion)
+                    Clicking("/");
+                else if (keyCode == Keys.D5 && e.Shift)
+                    Clicking("%");
+                else if (keyCode == Keys.OemPeriod || keyCode == Keys.Decimal || keyCode == Keys.Oemcomma)
+                    Clicking(",");
+                else if (keyCode == Keys.Oemplus || keyCode == Keys.Enter || keyCode == Keys.Return)
+                    Clicking("=");
+                else if (keyCode == Keys.Back)
+                    Clicking("←");
             }
         }
         #endregion
